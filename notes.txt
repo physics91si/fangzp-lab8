@@ -1,0 +1,75 @@
+Object-Oriented Programming
+1) Modules
+2) Classes
+3) Particle simulation!
+
+#A module is a file containing Python definitions and statements. The file name is the module name with the suffix .py
+
+import <module>
+from <module> import <function> #Can use *, everything, but inadvisable as it uses up memory and worsens readability
+dir(support) # lists all types of names: variables, modules, functions, etc.
+
+#locate module, import your own modules
+import sys
+sys.path.append('/Users/kaitlynshin/Dropbox/NASA_Summer2015/codes') #Append a path. Locate any piece of code in that path. For example, if you wrote a quadratic formula function and wantd to import it instead of copy-pasting it every time...
+import stack_data as stack
+
+#for debugging
+reload(stack)
+
+import foo #A module we wrote ourselves, for example foo=complex numbers in a+bi format
+reload(foo) #Import the newest version of the module
+
+Ex:
+foo is a text file
+foo2
+    import foo
+    foo.print('___') 
+# But what if there's an error in the print function in foo? If we edit foo, the changes won't come up in foo2. Include the line reload(foo) after import foo
+dir(foo)
+
+Object-oriented programming vs. procedural programming. What makes OOP better?
+Procedures = commands. Procedural program = string of procedures. Like a recipe!
+Functional programming: all commands are functions in a procedure. Bad for modeling the real world, as they're kind of abstract entities. 
+We can instead think about objects that have properties associated with them, methods that perform actions on the object. Methods have to belong to some object.
+Everything you can do w/ functional programming, you can do with OOP (they all reduce to Turing machines)
+What are the benefits of OOP? Allow you to decompose program into discrete chunts, allows you to reuse code you've already written. By increasing dependency, you can save on space and increase readability.
+
+Difference between module in class? Modules can contain multiple classes
+
+How would I do this in Java? (code here)
+In Python, it's a lot easier! 
+What is self doing? In Python, when you define an object instance, the instance is passed into the method. The self is referring the exact instance of the class for which the method is being called.
+object.<method>() #The parameter being passed into method is object, but need to declare self for instance variable
+
+Let's make a class for complex numbers!
+import math
+class Complex:
+    '''A class that represents a complex number with a real and imaginary part''' #Doc string, so if you typed Complex.__doc__
+    # Initialize a complex number
+    def __init__(self, realpart, imagpart): #Need 3 parameters: 1 parameter for self, real part, imaginary part
+        self.real = realpart
+        self.imag = imagpart
+    #What methods do complex numbers have?
+    def __add__(self, other): #Overrides plus operation
+        if other.__class__ == 'float':
+            return Complex(self.real+other, self.imag)
+        else:
+            return Complex(self.real + other.real, self.imag + other.imag) 
+        # a complex number with sum of real and imaginary parts
+        # duck typing (noun, not a verb): If it walks like a duck and quacks like a duck, then it is a duck.
+        # If something behaves like a complex number, we should treat it like a complex number.
+    def conjugate(self): # Why not double underscore? We're now defining a function that isn't special.
+        return Complex(self.real, -self.imag)
+    def __abs__(self):
+        return math.sqrt(self.real ** 2 + self.imag ** 2)
+    def __str__(self): #Prints string version of self
+        # return "{self.real}+{self.imag}i".format(self=self) New version of how to input parameters into strings
+        return str(self.real) + '+' + str(self.imag) +'i'
+
+z=Complex(5,3)
+z2=z.add(Complex(1,2)) # Sub out z2=z+15
+print(z2.real)
+print(z2.imag)
+abs(z2)
+self(z2)
